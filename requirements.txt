@@ -1,0 +1,21 @@
+# Core dependencies
+streamlit==1.43.1
+langchain-core==0.3.40
+langchain-openai==0.2.14
+langgraph==0.2.76
+langchain-experimental==0.3.4
+pyperclip==1.8.2
+
+# Visualization
+graphviz==0.20.3
+
+# Composio integration
+composio_langchain==0.7.5
+composio_langgraph==0.7.5
+
+# OpenAI
+openai==1.64.0
+
+# Utility packages
+python-dotenv==1.0.0
+pydantic==2.10.6
