@@ -209,10 +209,64 @@ def format_json(json_str):
         return json_str
 
 def create_zip_file(code, agent_name):
-    """Create a zip file containing the agent code and requirements.txt."""
+    """Create a zip file containing the agent code, requirements.txt, and README.md."""
     # Create a BytesIO object to store the ZIP file
     zip_buffer = io.BytesIO()
     
+    # Define the README.md content
+    readme_content = f'''# 🤖 {agent_name}
+
+This README provides instructions on how to set up and run the generated agent system.
+
+## 📋 Prerequisites
+
+Ensure you have the following installed on your system:
+
+- Python 3.10 or higher
+- pip (Python package manager)
+
+## 📦 Installation
+
+1. **Clone the repository** (if applicable) or download the code files.
+
+2. **Navigate to the project directory**:
+   ```bash
+   cd path/to/your/project
+   ```
+
+3. **Install the required dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. **Set up Composio API Key**
+
+   To use Composio's features, you'll need to set up your Composio API key. Follow the instructions provided in the <a href="https://docs.composio.dev/getting-started/quickstart" target="_blank">Composio Quickstart Guide</a> to obtain and configure your API key.
+
+## 🚀 Running the Agent System
+
+1. **Set up environment variables** (if required):
+   - Create a `.env` file in the project directory.
+   - Add your API keys and other necessary configurations.
+
+2. **Execute the main script**:
+   ```bash
+   python main.py
+   ```
+
+## 🛠️ Customization
+
+- Modify the `main.py` file to adjust the agent's behavior or integrate additional tools.
+- Update the `.env` file to change configurations or API keys.
+
+## 📞 Support
+
+For any issues or questions, please contact the project maintainer.
+
+---
+
+*This agent system was generated using [InstAgent](https://github.com/akhil-bot/InstAgent), a tool for creating sophisticated multi-agent systems from natural language descriptions.*
+'''
+
     # Create a ZIP file
     with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zipf:
         # Add main.py with the generated code
@@ -226,26 +280,30 @@ def create_zip_file(code, agent_name):
             zipf.writestr('requirements.txt', requirements_content)
         except FileNotFoundError:
             # If requirements.txt is not found, add a default one
-            default_requirements = """# Core dependencies
-langchain-core==0.3.40
-langchain-openai==0.2.14
-langgraph==0.2.76
-langchain-experimental==0.3.4
-pyperclip==1.8.2
+            default_requirements = """
+                # Core dependencies
+                langchain-core==0.3.40
+                langchain-openai==0.2.14
+                langgraph==0.2.76
+                langchain-experimental==0.3.4
+                pyperclip==1.8.2
 
 
-# Composio integration
-composio_langchain==0.7.5
-composio_langgraph==0.7.5
+                # Composio integration
+                composio_langchain==0.7.5
+                composio_langgraph==0.7.5
 
-# OpenAI
-openai==1.64.0
+                # OpenAI
+                openai==1.64.0
 
-# Utility packages
-python-dotenv==1.0.0
-pydantic==2.10.6
-"""
+                # Utility packages
+                python-dotenv==1.0.0
+                pydantic==2.10.6
+                """
             zipf.writestr('requirements.txt', default_requirements)
+        
+        # Add README.md
+        zipf.writestr('README.md', readme_content)
     
     # Reset the buffer position to the beginning
     zip_buffer.seek(0)
@@ -613,6 +671,7 @@ def display_tool_output(output):
                             <h4>{member.get('name', 'Member')}</h4>
                             <p><strong>Role:</strong> {member.get('role', 'N/A')}</p>
                             <p><strong>Tools:</strong> {', '.join(member.get('tools', ['None']))}</p>
+                            <p><strong>Prompt:</strong> {member.get('prompt', 'N/A')}</p>
                         </div>
                         """, unsafe_allow_html=True)
             else:
@@ -678,7 +737,7 @@ def display_code_output(output, key_suffix=""):
                 
                 zip_key = f"download_zip_{key_suffix}_{int(time.time() * 1000)}"
                 st.download_button(
-                    label="📦 Download as ZIP",
+                    label="📦 Download as Project",
                     data=zip_buffer,
                     file_name=zip_filename,
                     mime="application/zip",
@@ -756,7 +815,7 @@ def main():
             """
             <div style="margin-bottom: 2rem;">
                 <h1>🤖 InstAgent</h1>
-                <p style="color: #94a3b8;">Build custom multi-agent systems with natural language</p>
+                <p style="color: #94a3b8;">🚀 Instant Multi-Agent Systems at Your Fingertips</p>
             </div>
             """,
             unsafe_allow_html=True

@@ -2,7 +2,6 @@
 
 ![InstAgent Logo](assets/InstAgent_logo.png)
 
-
 ## 🚀 Instant Multi-Agent Systems at Your Fingertips
 
 **InstAgent** transforms the way you build AI agent systems. With just a text description, watch as sophisticated multi-agent networks spring to life - complete with specialized roles, intelligent tool selection, and ready-to-run Multi-Agent System.
@@ -18,6 +17,7 @@ No more complex configuration, no more struggling with agent architecture. Simpl
 - **Seamless Tool Integration**: Automatically assigns the perfect tools to each specialized agent
 - **Ready-to-Execute Code**: Generate fully functional multi-agent systems with robust workflows and connections
 - **Visualization Included**: See your agent network come alive with interactive workflow diagrams
+- **Enhanced Functionality with Composio**: Leverages Composio to equip AI agents with over 100 high-quality integrations, enabling seamless function calling and tool usage across various platforms.
 
 ## 🛠️ How It Works
 
@@ -31,8 +31,8 @@ InstAgent employs a powerful three-stage pipeline:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/instagent.git
-   cd instagent
+   git clone https://github.com/akhil-bot/InstAgent.git
+   cd InstAgent
    ```
 
 2. **Install dependencies**
@@ -40,11 +40,9 @@ InstAgent employs a powerful three-stage pipeline:
    pip install -r requirements.txt
    ```
 
-3. **Environment Setup**
-   - Create a `.env` file with your OpenAI API key (optional)
-   ```
-   OPENAI_API_KEY=your_api_key_here
-   ```
+3. **Set up Composio API Key**
+
+   To use Composio's features, you'll need to set up your Composio API key. Follow the instructions provided in the <a href="https://docs.composio.dev/getting-started/quickstart" target="_blank">Composio Quickstart Guide</a> to obtain and configure your API key.
 
 ## 💻 Getting Started
 
@@ -122,21 +120,29 @@ Contributions to InstAgent are welcome! Here's how you can help:
 4. **Push** to the branch (`git push origin feature/amazing-feature`)
 5. **Open a Pull Request**
 
+## 💡 Feature Requests
+
+We welcome your ideas and suggestions! To request a new feature, please start a <a href="https://github.com/akhil-bot/InstAgent/discussions" target="_blank">discussion</a> on our GitHub repository.
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 📞 Contact
 
-- **Issues**: Please use the GitHub issues page for bug reports and feature requests
+- **Issues**: Please use the <a href="https://github.com/akhil-bot/InstAgent/issues" target="_blank">GitHub issues page</a> for bug reports and feature requests
 - **Email**: akhil.230299@gmail.com
-- **LinkedIn**: [Akhil Maddala](https://www.linkedin.com/in/akhil-sainath-maddala-4b9830185/)
+- **LinkedIn**: <a href="https://www.linkedin.com/in/akhil-sainath-maddala-4b9830185/" target="_blank">Akhil Maddala</a>
 
 ## 🙏 Acknowledgements
 
-- This project uses [Langgraph](https://github.com/langchain-ai/langgraph) for agent orchestration
-- UI built with [Streamlit](https://streamlit.io/)
-- LLM capabilities powered by [OpenAI](https://openai.com/)
+- This project uses <a href="https://github.com/langchain-ai/langgraph" target="_blank">Langgraph</a> for agent orchestration
+- UI built with <a href="https://streamlit.io/" target="_blank">Streamlit</a>
+- LLM capabilities powered by <a href="https://openai.com/" target="_blank">OpenAI</a>
+
+## 🌟 Explore More Agentic Systems
+
+If you enjoyed InstAgent, be sure to check out my other innovative agentic systems! These are agents that can automate your day-to-day activities, making your life easier and more efficient. Each project is designed to push the boundaries of what's possible with AI, offering unique features and capabilities. Visit my <a href="https://github.com/akhil-bot" target="_blank">GitHub profile</a> to discover more cutting-edge solutions and join the journey of transforming AI development.
 
 ---
 

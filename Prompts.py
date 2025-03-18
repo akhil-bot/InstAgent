@@ -147,6 +147,12 @@ Consider the following when selecting tools:
      - **Provide Step-by-Step Guidance:** Offer specific instructions or steps the team member should follow to achieve their goal.
      - **Suggest Using Tools:** Optionally mention the assigned tools if they can assist in completing the task.
      - **Specify Expected Output:** Indicate the expected structure or format of the outcome, if relevant.
+     - Examples: Include high-quality examples if helpful, using placeholders [in brackets] for complex elements.
+        - What kinds of examples may need to be included, how many, and whether they are complex enough to benefit from placeholders.
+     - Clarity and Conciseness: Use clear, specific language. Avoid unnecessary instructions or bland statements.
+     - Formatting: Use markdown features for readability. DO NOT USE ``` CODE BLOCKS UNLESS SPECIFICALLY REQUESTED. Use ```json for JSON output. DO NOT USE H1, H2 of markdowns.
+     - Preserve User Content: If the input task or prompt includes extensive guidelines or examples, preserve them entirely, or as closely as possible. If they are vague, consider breaking down into sub-steps. Keep any details, guidelines, examples, variables, or placeholders provided by the user.
+
 
 # Output Format
 
