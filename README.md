@@ -27,7 +27,19 @@ InstAgent employs a powerful three-stage pipeline:
 2. **Tool Specialist** - Equips each agent with exactly the tools they need to excel
 3. **Code Synthesizer** - Transforms your agent design into fully functional Multi-Agent System
 
-## 📋 Installation
+## 💻 Getting Started
+
+Embark on your journey with InstAgent effortlessly! Whether you prefer a quick online experience or a comprehensive local setup, we've got you covered. Choose the option that best suits your needs:
+
+### Option 1: Try InstAgent Online
+
+Dive into InstAgent directly from your browser with no installation required. Click the link below to start exploring the power of InstAgent instantly:
+
+- [Try InstAgent Online](https://instagent.streamlit.app/)
+
+### Option 2: Local Installation
+
+Set up InstAgent on your local machine to fully customize and control your agent systems. Follow these steps to get started:
 
 1. **Clone the repository**
    ```bash
@@ -35,22 +47,26 @@ InstAgent employs a powerful three-stage pipeline:
    cd InstAgent
    ```
 
-2. **Install dependencies**
+2. **Create a virtual environment(Use Python 3.10 or higher)**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Set up Composio API Key**
+4. **Set up Composio API Key**
 
    To use Composio's features, you'll need to set up your Composio API key. Follow the instructions provided in the <a href="https://docs.composio.dev/getting-started/quickstart" target="_blank">Composio Quickstart Guide</a> to obtain and configure your API key.
 
-## 💻 Getting Started
+5. **Launch InstAgent**
 
-### Launch InstAgent
-
-```bash
-streamlit run main.py
-```
+   ```bash
+   streamlit run main.py
+   ```
 
 ### Create Your First Agent System in 3 Simple Steps
 
@@ -143,6 +159,10 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🌟 Explore More Agentic Systems
 
 If you enjoyed InstAgent, be sure to check out my other innovative agentic systems! These are agents that can automate your day-to-day activities, making your life easier and more efficient. Each project is designed to push the boundaries of what's possible with AI, offering unique features and capabilities. Visit my <a href="https://github.com/akhil-bot" target="_blank">GitHub profile</a> to discover more cutting-edge solutions and join the journey of transforming AI development.
+
+## 🌟 Support InstAgent
+
+If you find InstAgent helpful or insightful, please consider giving it a star on GitHub! Your support helps us continue to improve and develop new features.
 
 ---
 
