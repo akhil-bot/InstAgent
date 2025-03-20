@@ -17,7 +17,7 @@ No more complex configuration, no more struggling with agent architecture. Simpl
 - **Seamless Tool Integration**: Automatically assigns the perfect tools to each specialized agent
 - **Ready-to-Execute Code**: Generate fully functional multi-agent systems with robust workflows and connections
 - **Visualization Included**: See your agent network come alive with interactive workflow diagrams
-- **Enhanced Functionality with Composio**: Leverages Composio to equip AI agents with over 100 high-quality integrations, enabling seamless function calling and tool usage across various platforms.
+- **Enhanced Functionality with Composio**: Leverages Composio MCP to equip AI agents with over 100 high-quality integrations, enabling seamless function calling and tool usage across various platforms.
 
 ## 🛠️ How It Works
 
@@ -37,7 +37,36 @@ Dive into InstAgent directly from your browser with no installation required. Cl
 
 - [Try InstAgent Online](https://instagent.streamlit.app/)
 
-### Option 2: Local Installation
+### Option 2: 🐳 Docker Setup
+
+InstAgent can be easily run in a Docker container, eliminating the need to manage dependencies on your local machine.
+
+### Prerequisites
+
+- <a href="https://docs.docker.com/get-docker/" target="_blank">Docker</a>
+- <a href="https://docs.docker.com/compose/install/" target="_blank">Docker Compose</a> (optional but recommended)
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/akhil-bot/InstAgent.git
+   cd InstAgent
+   ```
+
+2. **Build and run the container**
+   ```bash
+   docker-compose up -d
+   ```
+
+3. **Access InstAgent**
+   
+   Open your browser and navigate to <a href="http://localhost:8502" target="_blank">http://localhost:8502</a>
+
+4. **Stop the container**
+   ```bash
+   docker-compose down
+   ```
+
+### Option 3: Local Installation
 
 Set up InstAgent on your local machine to fully customize and control your agent systems. Follow these steps to get started:
 
@@ -85,6 +114,7 @@ Design a research team that analyzes financial markets and generates investment 
 - A specialized team of agents (Market Analyzer, Data Specialist, Investment Strategist)
 - Strategic tool assignments for each agent
 - Complete, ready-to-run Multi-Agent System implementation
+- And a complete Agentic system as a project which can be downloaded as a zip file and used in any IDE
 
 ## 📊 Workflow Visualization
 
@@ -160,9 +190,11 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 If you enjoyed InstAgent, be sure to check out my other innovative agentic systems! These are agents that can automate your day-to-day activities, making your life easier and more efficient. Each project is designed to push the boundaries of what's possible with AI, offering unique features and capabilities. Visit my <a href="https://github.com/akhil-bot" target="_blank">GitHub profile</a> to discover more cutting-edge solutions and join the journey of transforming AI development.
 
+
+
 ## 🌟 Support InstAgent
 
-If you find InstAgent helpful or insightful, please consider giving it a star on GitHub! Your support helps us continue to improve and develop new features.
+If you find InstAgent helpful or insightful, please consider giving it a star on GitHub! Your support helps us continue to improve and develop new features. Thank you for being a part of our community!
 
 ---
 

@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  instagent:
+    build: .
+    container_name: instagent
+    ports:
+      - "8502:8502"
+    volumes:
+      - ./.env:/app/.env
+    restart: unless-stopped
+    environment:
+      - STREAMLIT_SERVER_HEADLESS=true
+
+
