@@ -270,7 +270,7 @@ Now, let's think step by step and determine the right armory of tools from the a
         3. **Use Prompts**: Use the system prompt provided under "prompt" key for each team member.
         4. **Define Agent Nodes**: Create agent nodes using Langgraph, specifying the tools and system prompts for each agent.
         5. **Establish Connections**: Use the connections from the JSON to define the flow between agents.
-        6. **Inputs from User**: Ask user to input all the details to successfully run the code to achieve the task.
+        6. **User Input in the code**: Adapt the code to accept dynamic user input, prompting the user for relevant details needed to complete the task. The input can be a file, text, or any other format, depending on the nature of the task and the tools in use.
         7. **Compile the Graph**: Combine all nodes and connections to compile the Langgraph.
         8. **Invoke the Graph**: Set up the graph to be invoked with a specific task, ensuring each agent performs its role in sequence.
         9. **Environment Variables**: Ensure the code includes environment variable checks for OPENAI_API_KEY and COMPOSIO_API_KEY.
@@ -345,21 +345,19 @@ Now, let's think step by step and determine the right armory of tools from the a
         # fileName: ResearchAgent.py
         
         # Import necessary libraries
-        import getpass
         import os
-        from langchain_core.tools import tool
-        from langchain_experimental.utilities import PythonREPL
         from langchain_openai import ChatOpenAI
         from langgraph.prebuilt import create_react_agent
-        from langgraph.graph import MessagesState, START,END, StateGraph
+        from langgraph.graph import MessagesState, START, END, StateGraph
         from langgraph.types import Command
         from langchain_core.messages import BaseMessage, HumanMessage
         
         # Define tools
         from composio_langgraph import Action, ComposioToolSet, App
         toolset = ComposioToolSet()
-        tools = toolset.get_tools(apps=[App.COMPOSIO_SEARCH]) # contains comma separate tools list and ALWAYS prefix with "App." for each tool
-
+        tools_composio = toolset.get_tools(apps=[App.COMPOSIO_SEARCH]) # contains comma separate tools list and ALWAYS prefix with "App." for each tool
+        verbose = False
+        
         if not os.environ.get("OPENAI_API_KEY"):
             api_key = input("Enter your OpenAI API key: ")
             os.environ["OPENAI_API_KEY"] = api_key
@@ -371,6 +369,12 @@ Now, let's think step by step and determine the right armory of tools from the a
         # Define agent nodes
         llm = ChatOpenAI(model="gpt-4o")
         
+        # will maintain the state of the whole team include inputs and outputs
+        agent_state = {
+            "research_node_output": "",
+            "outline_node_output": ""
+        }
+        
         # Define system prompts
         def make_system_prompt(suffix: str) -> str:
             return (
@@ -380,51 +384,57 @@ Now, let's think step by step and determine the right armory of tools from the a
                 " will help where you left off. Execute what you can to make progress."
                 " If you or any of the other assistants have the final answer or deliverable,"
                 " prefix your response with FINAL ANSWER so the team knows to stop."
-                f"\n{suffix}"
+                "\\nTask:\\n"
+                f"{suffix}"
             )
-
-        def get_next_node(last_message: BaseMessage, goto: str):
-          if "FINAL ANSWER" in last_message.content:
-              # Any agent decided the work is done
-              return END
-          return goto
         
-        research_agent = create_react_agent(
-            llm,
-            tools=tools,
-            prompt=make_system_prompt(
-                "You are a Research Specialist. Your task is to conduct comprehensive research on the assigned topic to gather reliable and relevant data. Begin by identifying key aspects of the topic that require investigation. Use the COMPOSIO_SEARCH tool to locate high-quality articles, papers, and credible sources. If data analysis or summarization is needed, utilize the CODEINTERPRETER tool to process datasets or extract insights. Organize your findings in a well-structured document, clearly citing all sources and highlighting critical information that may inform future stages of content creation."
-            ),
-        )
+        def get_next_node(last_message: BaseMessage, goto: str):
+            if "FINAL ANSWER" in last_message.content:
+                # Any agent decided the work is done
+        
+                return END
+            return goto
         
         def research_node(state: MessagesState) -> Command:
             print("## Research Agent Execution In-progress: ")
+            research_prompt = ("You are a Research Specialist. Your task is to conduct comprehensive research on the assigned topic to gather reliable and relevant data. "
+                               "Use the COMPOSIO_SEARCH tool to locate high-quality articles, papers, and credible sources.")
+            research_prompt += "\\n#Input: \\n" + f"{agent_state.get('user_input')}" # always give user input(text, file, etc.) as the input for the first node of the team
+        
+            research_agent = create_react_agent(
+                llm,
+                tools=tools_composio,
+                prompt=make_system_prompt(research_prompt),
+            )
             result = research_agent.invoke(state)
+            agent_state["research_node_output"] = result["messages"][-1].content
             goto = get_next_node(result["messages"][-1], "outline_architect")
-            print("#### Research Agent Output: ", result["messages"][-1].content)
+            print("#### Research Agent Output: ", agent_state["research_node_output"])
             result["messages"][-1] = HumanMessage(
-                content=result["messages"][-1].content, name="researcher"
+                content=agent_state["research_node_output"], name="researcher"
             )
             return Command(
                 update={"messages": result["messages"]},
                 goto=goto,
             )
         
-        outline_agent = create_react_agent(
-            llm,
-            tools=tools,
-            prompt=make_system_prompt(
-                "You are an expert Outline Architect. Your task is to take the researched data and create a logical, engaging blog structure that flows smoothly for readers. Begin by identifying key themes and insights from the data. Use COMPOSIO_SEARCH if you need additional context or examples to enrich the outline. Structure the blog with clear sections, headings, and subheadings, ensuring a logical flow from introduction to conclusion. Your final output should be a detailed outline ready for the drafting phase, including notes on tone, key points for each section, and any important transitions."
-            ),
-        )
-        
         def outline_node(state: MessagesState) -> Command:
             print("## Outline Agent Execution In-progress: ")
+            outline_prompt = ("You are an expert Outline Architect. Your task is to take the researched data and create a logical, engaging blog structure. "
+                              "Use the COMPOSIO_SEARCH tool if needed for additional context or examples.")
+            outline_prompt += "\\n#Input: \\n" + f"{agent_state.get('research_node_output')}" # previous node output will be the input to this node
+        
+            outline_agent = create_react_agent(
+                llm,
+                tools=tools_composio,
+                prompt=make_system_prompt(outline_prompt),
+            )
             result = outline_agent.invoke(state)
+            agent_state["outline_node_output"] = result["messages"][-1].content
             goto = get_next_node(result["messages"][-1], END)
-            print("#### Outline Agent Output: ", result["messages"][-1].content)
+            print("#### Outline Agent Output: ", agent_state["outline_node_output"])
             result["messages"][-1] = HumanMessage(
-                content=result["messages"][-1].content, name="outline_architect"
+                content=agent_state["outline_node_output"], name="outline_architect"
             )
             return Command(
                 update={"messages": result["messages"]},
@@ -441,7 +451,8 @@ Now, let's think step by step and determine the right armory of tools from the a
         workflow.add_edge("outline_architect", END)
         
         graph = workflow.compile()
-        user_input = input("Enter the topic to research on: ") # Make this dynamic according to the task to be achieved
+        user_input = input("Enter the topic to research on: ")  # Make this dynamic according to the task to be achieved and store it in the agent_state with same name
+        agent_state["user_input"] = user_input
         
         # Invoke the graph
         events = graph.stream(
@@ -456,8 +467,11 @@ Now, let's think step by step and determine the right armory of tools from the a
             {"recursion_limit": 150},
         )
         for s in events:
-            print(s)
-            print("----")
+            if verbose:
+                print(s)
+                print("----")
+            pass
+
         ```
         
         # Notes
