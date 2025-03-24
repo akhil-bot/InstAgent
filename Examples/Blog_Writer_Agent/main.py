@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
-# fileName: BlogWritingAgent.py
+# fileName: BlogWriterAgent.py
 
 # Import necessary libraries
-import getpass
 import os
-from langchain_core.tools import tool
-from langchain_experimental.utilities import PythonREPL
 from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import create_react_agent
 from langgraph.graph import MessagesState, START, END, StateGraph
@@ -16,7 +13,9 @@ from langchain_core.messages import BaseMessage, HumanMessage
 # Define tools
 from composio_langgraph import Action, ComposioToolSet, App
 toolset = ComposioToolSet()
-tools = toolset.get_tools(apps=[App.SERPAPI]) # contains comma separate tools list and ALWAYS prefix with "App." for each tool
+tools_tavily = toolset.get_tools(apps=[App.TAVILY])
+tools_notion = toolset.get_tools(apps=[App.NOTION])
+verbose = False
 
 if not os.environ.get("OPENAI_API_KEY"):
     api_key = input("Enter your OpenAI API key: ")
@@ -29,6 +28,14 @@ if not os.environ.get("COMPOSIO_API_KEY"):
 # Define agent nodes
 llm = ChatOpenAI(model="gpt-4o")
 
+# will maintain the state of the whole team include inputs and outputs
+agent_state = {
+    "research_node_output": "",
+    "outline_node_output": "",
+    "writing_node_output": "",
+    "editing_node_output": ""
+}
+
 # Define system prompts
 def make_system_prompt(suffix: str) -> str:
     return (
@@ -38,6 +45,7 @@ def make_system_prompt(suffix: str) -> str:
         " will help where you left off. Execute what you can to make progress."
         " If you or any of the other assistants have the final answer or deliverable,"
         " prefix your response with FINAL ANSWER so the team knows to stop."
+        "\nTask:\n"
         f"{suffix}"
     )
 
@@ -47,84 +55,90 @@ def get_next_node(last_message: BaseMessage, goto: str):
         return END
     return goto
 
-research_agent = create_react_agent(
-    llm,
-    tools=tools,
-    prompt=make_system_prompt(
-        "You are a Topic Researcher. Your task is to conduct thorough research on the given topic to gather relevant information and insights. Use the COMPOSIO_SEARCH tool to find credible sources, statistics, and expert opinions. Compile your findings into a comprehensive research document, highlighting key points and insights that will inform the content strategy and writing process."
-    ),
-)
-
 def research_node(state: MessagesState) -> Command:
     print("## Research Agent Execution In-progress: ")
+    research_prompt = ("You are a Research Specialist. Your task is to conduct thorough online research to gather accurate and relevant information on the given topic. "
+                       "Use the TAVILY tool to perform advanced searches, including image inclusion and domain filtering, to find credible sources.")
+    research_prompt += "\n#Input: \n" + f"{agent_state.get('user_input')}"
+    
+    research_agent = create_react_agent(
+        llm,
+        tools=tools_tavily,
+        prompt=make_system_prompt(research_prompt),
+    )
     result = research_agent.invoke(state)
+    agent_state["research_node_output"] = result["messages"][-1].content
     goto = get_next_node(result["messages"][-1], "content_strategist")
-    print("#### Research Agent Output: ", result["messages"][-1].content)
+    print("#### Research Agent Output: ", agent_state["research_node_output"])
     result["messages"][-1] = HumanMessage(
-        content=result["messages"][-1].content, name="researcher"
+        content=agent_state["research_node_output"], name="researcher"
     )
     return Command(
         update={"messages": result["messages"]},
         goto=goto,
     )
-
-outline_agent = create_react_agent(
-    llm,
-    tools=[],
-    prompt=make_system_prompt(
-        "You are a Content Strategist. Your task is to outline the blog structure based on the research provided by Emma. Ensure the content aligns with the target audience's interests and preferences. Identify key sections, headings, and subheadings that will guide the writing process. Provide a clear and logical flow for the blog, ensuring it is engaging and informative."
-    ),
-)
 
 def outline_node(state: MessagesState) -> Command:
     print("## Outline Agent Execution In-progress: ")
+    outline_prompt = ("You are a Content Strategist. Your task is to organize and structure the gathered information into a coherent outline for the blog. "
+                      "Use Notion to create a structured outline that logically organizes the information into sections and subsections.")
+    outline_prompt += "\n#Input: \n" + f"{agent_state.get('research_node_output')}"
+    
+    outline_agent = create_react_agent(
+        llm,
+        tools=tools_notion,
+        prompt=make_system_prompt(outline_prompt),
+    )
     result = outline_agent.invoke(state)
+    agent_state["outline_node_output"] = result["messages"][-1].content
     goto = get_next_node(result["messages"][-1], "writer")
-    print("#### Outline Agent Output: ", result["messages"][-1].content)
+    print("#### Outline Agent Output: ", agent_state["outline_node_output"])
     result["messages"][-1] = HumanMessage(
-        content=result["messages"][-1].content, name="content_strategist"
+        content=agent_state["outline_node_output"], name="content_strategist"
     )
     return Command(
         update={"messages": result["messages"]},
         goto=goto,
     )
-
-writing_agent = create_react_agent(
-    llm,
-    tools=tools,
-    prompt=make_system_prompt(
-        "You are a Writer. Your task is to write a compelling and coherent blog draft based on the research and outline provided by Emma and Liam. Use the COMPOSIO_SEARCH tool to enhance your writing with context-aware suggestions and automation. Focus on creating an engaging narrative that captures the reader's attention while conveying the key messages effectively. Ensure the draft is well-structured and flows logically from one section to the next."
-    ),
-)
 
 def writing_node(state: MessagesState) -> Command:
     print("## Writing Agent Execution In-progress: ")
+    writing_prompt = ("You are a Writer. Your task is to compose a comprehensive and engaging blog post based on the structured outline provided by the Content Strategist.")
+    writing_prompt += "\n#Input: \n" + f"{agent_state.get('outline_node_output')}"
+    
+    writing_agent = create_react_agent(
+        llm,
+        tools=[],
+        prompt=make_system_prompt(writing_prompt),
+    )
     result = writing_agent.invoke(state)
+    agent_state["writing_node_output"] = result["messages"][-1].content
     goto = get_next_node(result["messages"][-1], "editor")
-    print("#### Writing Agent Output: ", result["messages"][-1].content)
+    print("#### Writing Agent Output: ", agent_state["writing_node_output"])
     result["messages"][-1] = HumanMessage(
-        content=result["messages"][-1].content, name="writer"
+        content=agent_state["writing_node_output"], name="writer"
     )
     return Command(
         update={"messages": result["messages"]},
         goto=goto,
     )
 
-editing_agent = create_react_agent(
-    llm,
-    tools=[],
-    prompt=make_system_prompt(
-        "You are an Editor. Your task is to review and refine the blog draft written by Sophia. Ensure the content is clear, coherent, and free of grammatical errors. Pay attention to the flow and structure of the blog, making adjustments as necessary to enhance readability and engagement. Provide feedback and suggestions for improvement, ensuring the final draft is publication-ready."
-    ),
-)
-
 def editing_node(state: MessagesState) -> Command:
     print("## Editing Agent Execution In-progress: ")
+    editing_prompt = ("You are an Editor. Your task is to review and refine the blog post to ensure clarity, coherence, and grammatical accuracy.")
+    editing_prompt += "\n#Input: \n" + f"{agent_state.get('writing_node_output')}"
+    
+    editing_agent = create_react_agent(
+        llm,
+        tools=[],
+        prompt=make_system_prompt(editing_prompt),
+    )
     result = editing_agent.invoke(state)
+    agent_state["editing_node_output"] = result["messages"][-1].content
     goto = get_next_node(result["messages"][-1], END)
-    print("#### Editing Agent Output: ", result["messages"][-1].content)
+    print("#### Editing Agent Output: ", agent_state["editing_node_output"])
     result["messages"][-1] = HumanMessage(
-        content=result["messages"][-1].content, name="editor"
+        content=agent_state["editing_node_output"], name="editor"
     )
     return Command(
         update={"messages": result["messages"]},
@@ -145,7 +159,8 @@ workflow.add_edge("writer", "editor")
 workflow.add_edge("editor", END)
 
 graph = workflow.compile()
-user_input = input("Enter the topic to research on: ") # Make this dynamic according to the task to be achieved
+user_input = input("Enter the topic to research on: ")
+agent_state["user_input"] = user_input
 
 # Invoke the graph
 events = graph.stream(
@@ -160,6 +175,7 @@ events = graph.stream(
     {"recursion_limit": 150},
 )
 for s in events:
+    if verbose:
+        print(s)
+        print("----")
     pass
-    # print(s)
-    # print("----")

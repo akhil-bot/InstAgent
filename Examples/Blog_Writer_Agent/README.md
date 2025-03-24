@@ -1,4 +1,4 @@
-# 🤖 LinkedIn Post Agent
+# 🤖 Blog Writer Agent
 
 This README provides instructions on how to set up and run the generated agent system.
 
@@ -37,6 +37,11 @@ Ensure you have the following installed on your system:
 
    To use Composio's features, you'll need to set up your Composio API key. Follow the instructions provided in the <a href="https://docs.composio.dev/getting-started/quickstart" target="_blank">Composio Quickstart Guide</a> to obtain and configure your API key.
 
+6. **Run the agent system**:
+   ```bash
+   python main.py
+   ```
+
 ### Option 2: Docker Installation
 
 1. **Create a Dockerfile** in the project directory:
@@ -59,12 +64,12 @@ Ensure you have the following installed on your system:
 
 2. **Build the Docker image**:
    ```bash
-   docker build -t linkedin-post-agent .
+   docker build -t blog-writer-agent .
    ```
 
 3. **Run the Docker container**:
    ```bash
-   docker run -e OPENAI_API_KEY=your_api_key -e COMPOSIO_API_KEY=your_composio_key linkedin-post-agent
+   docker run -e OPENAI_API_KEY=your_api_key -e COMPOSIO_API_KEY=your_composio_key blog-writer-agent
    ```
 
 ## 🛠️ Customization

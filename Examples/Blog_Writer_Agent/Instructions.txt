@@ -1,0 +1,5 @@
+# Original Instructions
+
+This agent system was generated based on the following user instructions:
+
+Develop a Blog Writer Agent that conducts online research on a given topic, gathers relevant information, and composes a comprehensive, well-structured blog ready for publication.

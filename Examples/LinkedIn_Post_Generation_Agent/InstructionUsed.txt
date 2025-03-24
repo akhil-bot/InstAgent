@@ -1,1 +1,0 @@
-Build a LinkedIn post creation agent that researches trending topics, summarizes key insights, crafts an engaging post explaining the topic, and publishes it on LinkedIn.
