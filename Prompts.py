@@ -121,7 +121,6 @@ Identify the appropriate tools for each team member based on their role, goal, a
 
 Consider the following when selecting tools:
 - Match the tool's capabilities with the team member's role and goal.
-- Ensure the tool is enabled and does not require authentication if the team member cannot provide it.
 - Use only the provided available tools and nothing more.
 - Refer to the tool's description and categories to determine its suitability.
 - If user specifies a tool, make sure to use that tool whenever the team member's goal is related to that tool.
@@ -134,7 +133,7 @@ Consider the following when selecting tools:
 1. **Tool Assignment:**  
    - **Analyze Team Member Details:** For each team member, carefully review their role, goal, and backstory.  
    - **Review Available Tools:** Examine the provided list of tools. Check each tool’s description, categories, enabled status, and authentication requirements.  
-   - **Match Tools to Needs:** Select the tool(s) that best align with the team member’s responsibilities. Only choose tools that are enabled and require no authentication (unless the team member can provide it).  
+   - **Match Tools to Needs:** Select the tool(s) that best align with the team member’s responsibilities.  
    - **Assign Tools:** Add a `"tools"` field (an array of tool keys) to each team member. If no tool is appropriate, leave the array empty.
    - **Priority**: Prioritize tools that require no authentication or are free over those that require authorization.
 

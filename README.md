@@ -114,7 +114,11 @@ Design a research team that analyzes financial markets and generates investment 
 - A specialized team of agents (Market Analyzer, Data Specialist, Investment Strategist)
 - Strategic tool assignments for each agent
 - Complete, ready-to-run Multi-Agent System implementation
-- And a complete Agentic system as a project which can be downloaded as a zip file and used in any IDE
+- And a complete Agentic system as a project which can be downloaded as a zip file that includes all the files and can be used in any IDE
+
+### 💡 Explore Examples
+
+Looking for inspiration? Check out the <a href="https://github.com/akhil-bot/InstAgent/tree/master/Examples" target="_blank">Examples folder</a> in the repository to kickstart your ideas. You'll find a variety of pre-built agent systems demonstrating different use cases and capabilities.
 
 ## 📊 Workflow Visualization
 

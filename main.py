@@ -884,10 +884,10 @@ def main():
         task = "Create a prompt writer agent that writes a prompt based on the user given task"
 
         example_tasks = [
-            "Create a prompt writer agent that writes a prompt based on the user given task",
-            "Create a web scraper agent that scrapes a website and saves the data to a database",
-            "Create a data analysis agent that analyzes a dataset and provides a report",
-            "Create a social media post generator agent that generates a post based on the user given task"
+            "Develop a Blog Writer Agent that conducts online research on a given topic, gathers relevant information, and composes a comprehensive, well-structured blog ready for publication.",
+            "Build a LinkedIn post creation agent that researches trending topics, summarizes key insights, crafts an engaging post explaining the topic, and publishes it on LinkedIn.",
+            "Develop an AI Hedge Fund Agent that performs comprehensive fundamental and technical analysis of a specified stock using publicly available data, providing actionable recommendations to buy, sell, or hold based on its findings.",
+            "Create a GitHub PR Review Agent that accepts a pull request link as input, analyzes the proposed changes, and provides a detailed review assessing code quality, adherence to coding principles, and potential bugs."
         ]
         # Add a dropdown to select an example task
         selected_example = st.selectbox(
