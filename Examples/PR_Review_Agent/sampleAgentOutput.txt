@@ -1,0 +1,82 @@
+Enter the GitHub pull request link: https://github.com/Koredotcom/SearchAssist-Toolkit/pull/34
+## Code Quality Agent Execution In-progress: 
+#### Code Quality Agent Output:  The pull request (PR) #34 in the "SearchAssist-Toolkit" repository introduces two main changes:
+
+1. **Removal of API Key from Configuration:**
+   - The PR removes the use of an API key from the `ragasEvaluator.py` file, which is part of the RAG Evaluator module. This is likely done for security reasons, to avoid exposing sensitive information directly in the codebase.
+   - Specifically, it removes the `api_key` from instances where the `AzureChatOpenAI` and `AzureOpenAIEmbeddings` are initialized.
+
+2. **Addition of Cost Calculation for Evaluation:**
+   - The PR adds functionality to print out the total cost of the evaluation process.
+   - Updates in `config.json` introduce a new section, `"cost_of_model"`, which specifies costs per token for input and output.
+   - In the `ragasEvaluator.py`, the code now calculates and prints the total tokens used for evaluation and the corresponding total cost in dollars, using the newly added cost configuration.
+
+These changes enhance the code by improving security (by removing sensitive information) and adding useful functionality for monitoring and managing evaluation costs. 
+
+To further analyze the quality of these changes, examining the coding style, potential impacts on other parts of the system, and ensuring the modifications are well-tested would be advisable. If needed, further code quality analysis could be conducted using static analysis tools or code review practices.
+## Coding Principles Agent Execution In-progress: 
+#### Coding Principles Agent Output:  To conduct a comprehensive code quality analysis of the changes proposed in PR #34, I will evaluate the following aspects:
+
+1. **Security Practices:**
+   - The removal of the API key from the codebase is a positive step towards securing sensitive information. This adheres to the principle of not hardcoding sensitive credentials in the source code.
+
+2. **Code Organization and Maintainability:**
+   - The removal of the API key requires developers to handle such credentials externally, potentially through environment variables or configuration files not included in the version control, which is a best practice.
+   - Introducing cost calculations directly into the evaluation logic is a useful feature for monitoring and optimizing operational costs.
+
+3. **Configuration Management:**
+   - The addition of a `cost_of_model` section in `config.json` is a good practice, as it centralizes configuration settings and supports easy adjustments without modifying the code.
+   - Ensure that any changes to `config.json` are well-documented, and default values are sensible to avoid confusion and misconfigurations.
+
+4. **Testing and Validation:**
+   - Verify that these code changes are accompanied by updates to unit or integration tests. This ensures that the new functionality works as expected and that removing the API key does not introduce bugs.
+   - If no tests are updated or added, it is recommended to do so to ensure code robustness.
+
+5. **Code Style and Readability:**
+   - Ensure the code changes follow the existing coding conventions and style of the project to maintain consistency.
+   - Use descriptive variable names and comments where necessary to explain complex logic, especially in parts involving cost calculations.
+
+6. **Potential Impacts:**
+   - Consider any dependencies or other parts of the system that might be affected by these changes, especially the handling of credentials and configurations.
+   - Ensure backward compatibility if this module interacts with other systems or modules.
+
+7. **Documentation:**
+   - Update any relevant documentation to reflect the changes made, especially regarding configuration, setup instructions, or usage guides related to cost calculations.
+
+The code changes seem to align with good coding practices by enhancing security and functionality. However, the final assessment would depend on how well these changes integrate with the existing system, their impact on functionality, and thorough testing to ensure reliability. If any issues are identified, they should be addressed before merging the PR.
+## Bug Detection Agent Execution In-progress: 
+#### Bug Detection Agent Output:  The pull request consists of two commits:
+
+1. **Commit `0606ca5`: "remove apikey from config"**
+   - This commit removes the hardcoded API key from the `ragasEvaluator.py` file, which enhances the security of the codebase by preventing sensitive information from being exposed.
+
+2. **Commit `b24e706`: "Print total cost of evaluation"**
+   - This commit introduces a mechanism to print the total cost of evaluation, using the cost per token for input and output specified in the `config.json` file. This change provides transparency into the evaluation process's operational costs and aids in cost management.
+
+Both commits are authored by Y-Dharvik and reflect an emphasis on improving security and adding cost management features. The changes align with good coding practices, but it's essential to ensure proper documentation and testing accompany these changes to maintain code quality and functionality. 
+
+Next steps could include checking for updated or new test cases related to these changes and verifying that these modifications do not negatively impact other parts of the system.
+## Integration Agent Execution In-progress: 
+#### Integration Agent Output:  To ensure that these modifications do not introduce bugs or affect other parts of the system negatively, consider the following steps:
+
+1. **Review Changes in Context:**
+   - Check the entire context of the `ragasEvaluator.py` modifications to ensure the removal of the API key and the addition of cost calculations do not disrupt the existing logic or depend on any implicit assumptions.
+
+2. **Testing:**
+   - Verify if there are existing unit tests for `ragasEvaluator.py` that cover the functions where changes were made. Ensure that these tests pass with the updated code.
+   - If tests are missing for the new cost calculation functionality, draft new test cases to cover scenarios where the costs are calculated and printed.
+   - Test the system in environments that use the modified module to ensure that the removal of the API key does not cause failures in connecting to necessary services.
+
+3. **Configuration Handling:**
+   - Ensure that the `config.json` changes are compatible with existing configurations, and that there are fallback mechanisms or defaults if this section is missing in someone's configuration.
+
+4. **Documentation Update:**
+   - Verify that documentation related to configuration and usage is updated to reflect the removal of the API key from the codebase and the new configuration options for cost calculation.
+
+5. **Integration Testing:**
+   - Conduct integration tests to ensure that the new changes work seamlessly with other modules that depend on this code.
+
+6. **Security Assessment:**
+   - Conduct a security assessment to ensure that the removal of the API key from the codebase is handled correctly in all environments (e.g., using environment variables or secure vaults for credentials).
+
+By following these steps, the impact of the changes can be assessed effectively, and any potential bugs or issues can be identified and resolved before merging the pull request.
