@@ -209,7 +209,7 @@ def format_json(json_str):
         return json_str
 
 def create_zip_file(code, agent_name):
-    """Create a zip file containing the agent code, requirements.txt, and README.md."""
+    """Create a zip file containing the agent code, requirements.txt, README.md, and agent outputs."""
     # Create a BytesIO object to store the ZIP file
     zip_buffer = io.BytesIO()
     
@@ -252,6 +252,11 @@ Ensure you have the following installed on your system:
 5. **Set up Composio API Key**
 
    To use Composio's features, you'll need to set up your Composio API key. Follow the instructions provided in the <a href="https://docs.composio.dev/getting-started/quickstart" target="_blank">Composio Quickstart Guide</a> to obtain and configure your API key.
+
+6. **Run the agent system**:
+   ```bash
+   python main.py
+   ```
 
 ### Option 2: Docker Installation
 
@@ -297,6 +302,14 @@ For any issues or questions, please contact the project maintainer.
 *This agent system was generated using [InstAgent](https://github.com/akhil-bot/InstAgent), a tool for creating sophisticated multi-agent systems from natural language descriptions.*
 '''
 
+    # Create instructions.txt content containing the original task
+    instructions_content = f'''# Original Instructions
+
+This agent system was generated based on the following user instructions:
+
+{st.session_state.get('task', 'No task description available')}
+'''
+
     # Create a ZIP file
     with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zipf:
         # Add main.py with the generated code
@@ -334,6 +347,19 @@ For any issues or questions, please contact the project maintainer.
         
         # Add README.md
         zipf.writestr('README.md', readme_content)
+        
+        # Add Instructions.txt
+        zipf.writestr('Instructions.txt', instructions_content)
+        
+        # Add team creation output JSON
+        if st.session_state.team_creator_output:
+            team_json = st.session_state.team_creator_output.replace('```json', '').replace('```', '').strip()
+            zipf.writestr('team_creation_output.json', team_json)
+        
+        # Add tool picker output JSON
+        if st.session_state.tool_picker_output:
+            tools_json = st.session_state.tool_picker_output.replace('```json', '').replace('```', '').strip()
+            zipf.writestr('tool_picker_output.json', tools_json)
     
     # Reset the buffer position to the beginning
     zip_buffer.seek(0)
@@ -413,6 +439,9 @@ def display_workflow_progress():
             st.progress(progress/100)
 
 def run_agent_creator(task, model="gpt-4o", temperature=0.0, workflow_placeholder=None):
+    # Store the original task in session state
+    st.session_state.task = task
+    
     prompts_obj = Prompts()
     llm = ChatOpenAI(model=model, temperature=temperature)
 
@@ -845,7 +874,7 @@ def main():
             """
             <div style="margin-bottom: 2rem;">
                 <h1>🤖 InstAgent</h1>
-                <p style="color: #94a3b8;">🚀 Instant Multi-Agent Systems at Your Fingertips</p>
+                <p style="color: #94a3b8;">🚀 Instant AI Multi-Agent Systems at Your Fingertips</p>
             </div>
             """,
             unsafe_allow_html=True

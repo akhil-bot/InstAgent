@@ -22,14 +22,14 @@ class Tools:
                 "name": "tavily",
                 "key": "TAVILY",
                 "description": "Tavily provides advanced search capabilities with various options including image inclusion, raw content, and domain filtering.",
-                "categories": ["web scraping", "Analytics & Data", "Search Optimization", "Data Retrieval", "Internet Search"],
+                "categories": ["web scraping", "research", "Analytics & Data", "Search Optimization", "Data Retrieval", "Internet Search"],
                 "no_auth":False
             },
             {
                 "name": "serpapi",
                 "key": "SERPAPI",
                 "description": "SerpApi provides a real-time API for structured search engine results, allowing developers to scrape, parse, and analyze SERP data for SEO and research",
-                "categories": ["web scraping", "Analytics & Data", "SEO Tools", "Data Analysis", "Internet Search"],
+                "categories": ["web scraping", "research", "Analytics & Data", "SEO Tools", "Data Analysis", "Internet Search"],
                 "no_auth":False
             },
             {
