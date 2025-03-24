@@ -1,0 +1,5 @@
+# Original Instructions
+
+This agent system was generated based on the following user instructions:
+
+Develop an AI Hedge Fund Agent that performs comprehensive fundamental and technical analysis of a specified stock using publicly available data, providing actionable recommendations to buy, sell, or hold based on its findings.
