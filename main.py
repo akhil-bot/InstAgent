@@ -881,7 +881,7 @@ def main():
         )
 
     with col2:
-        task = "Create a prompt writer agent that writes a prompt based on the user given task"
+        task = "Develop a Blog Writer Agent that conducts online research on a given topic, gathers relevant information, and composes a comprehensive, well-structured blog ready for publication."
 
         example_tasks = [
             "Develop a Blog Writer Agent that conducts online research on a given topic, gathers relevant information, and composes a comprehensive, well-structured blog ready for publication.",
