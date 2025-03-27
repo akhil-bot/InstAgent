@@ -14,7 +14,7 @@ No more complex configuration, no more struggling with agent architecture. Simpl
 
 Check out InstAgent in action:
 
-[![InstAgent Demo](https://www.loom.com/share/b6feda214f694393a6c30fee9d30b302?sid=d473c24a-8534-4b82-a699-5e367d9f2236)
+![InstAgent Demo](https://www.loom.com/share/b6feda214f694393a6c30fee9d30b302?sid=d473c24a-8534-4b82-a699-5e367d9f2236)
 
 ## ✨ Why InstAgent?
 
