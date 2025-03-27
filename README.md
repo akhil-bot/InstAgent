@@ -10,6 +10,12 @@
 
 No more complex configuration, no more struggling with agent architecture. Simply describe what you want, and let InstAgent handle the rest.
 
+## 📹 Demo
+
+Check out InstAgent in action:
+
+[![InstAgent Demo](https://www.loom.com/share/b6feda214f694393a6c30fee9d30b302?sid=d473c24a-8534-4b82-a699-5e367d9f2236)
+
 ## ✨ Why InstAgent?
 
 - **Zero to Agent in Seconds**: Describe your needs in plain English, get a full agent system instantly
@@ -114,7 +120,7 @@ Design a research team that analyzes financial markets and generates investment 
 - A specialized team of agents (Market Analyzer, Data Specialist, Investment Strategist)
 - Strategic tool assignments for each agent
 - Complete, ready-to-run Multi-Agent System implementation
-- And a complete Agentic system as a project which can be downloaded as a zip file that includes all the files and can be used in any IDE
+- And a complete Agentic system as a project which can be downloaded as a zip file and can be executed in any IDE with a single command
 
 ### 💡 Explore Examples
 
