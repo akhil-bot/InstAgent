@@ -891,7 +891,7 @@ def main():
         ]
         # Add a dropdown to select an example task
         selected_example = st.selectbox(
-            "🔍 Example Tasks",
+            "🔍 Example AI Agent Tasks",
             options=["Select an example..."] + example_tasks,
             index=0
         )

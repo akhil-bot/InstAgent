@@ -160,6 +160,31 @@ The system uses a state-of-the-art approach to:
 3. Select appropriate tools for each agent
 4. Generate syntactically correct, ready-to-deploy Python code
 
+## 🗺️ **Future Roadmap**  
+
+Here's a glimpse of what's planned for future versions of **InstAgent**:
+
+### 🌈 **Our Vision: Empowering True Autonomous AI Agents**  
+
+Our ultimate goal is to build a thriving ecosystem where AI agents are not just created but can seamlessly interact, collaborate, and adapt to achieve complex objectives. We envision a future where autonomous agents independently make decisions, solve problems, and drive innovation — unlocking the full potential of AI in real-world applications.  
+
+**InstAgent** aims to be a major step toward realizing this vision, laying the foundation for truly autonomous AI systems.
+
+### 🚧 Planned Improvements
+
+- [ ] **Custom Tool Generation** - Enable users to define and create custom tools through natural language, expanding agent capabilities without coding experience
+- [ ] **Multi-Framework Support** - Integration with various agentic frameworks like AutoGen, CrewAI, and others to leverage the strengths of each ecosystem
+- [ ] **Advanced Agent Design Patterns** - Implementation of sophisticated patterns such as hierarchical teams, recursive reasoning, and specialized agent topologies
+- [ ] **Enhanced Traceability & Memory** - Robust memory management systems allowing agents to retain context across sessions and trace decision-making processes
+- [ ] **One-Click Deployment** - Seamless deployment to various platforms (cloud services, local environments, edge devices) with a single click
+- [ ] **Comprehensive Evaluation Suite** - Advanced tracing and performance metrics to evaluate agent effectiveness and identify optimization opportunities
+- [ ] **Pre-built Specialized Agents** - Library of domain-specific agents ready for immediate use in fields like research, content creation, and data analysis
+- [ ] **Integrated Tool Marketplace** - Access to hundreds of pre-built tools and integrations that can be assembled into powerful agent systems
+- [ ] **And many more...**
+
+
+Want to contribute to any of these features? Check out our contributing guidelines below!
+
 ## 🤝 Contributing
 
 Contributions to InstAgent are welcome! Here's how you can help:
@@ -172,7 +197,7 @@ Contributions to InstAgent are welcome! Here's how you can help:
 
 ## 💡 Feature Requests
 
-We welcome your ideas and suggestions! To request a new feature, please start a <a href="https://github.com/akhil-bot/InstAgent/discussions" target="_blank">discussion</a> on our GitHub repository.
+Your ideas and suggestions are welcome! To request a new feature, please start a discussion on the GitHub repository.
 
 ## 📄 License
 
