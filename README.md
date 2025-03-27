@@ -4,7 +4,7 @@
 
 ## 🚀 Instant AI Multi-Agent Systems at Your Fingertips
 
-**InstAgent** transforms the way you build AI agent systems. With just a text description, watch as sophisticated multi-agent networks spring to life - complete with specialized roles, intelligent tool selection, and ready-to-run Multi-Agent System.
+**InstAgent(Instant + Agent)** transforms the way you build AI agent systems. With just a text description, watch as sophisticated multi-agent networks spring to life - complete with specialized roles, intelligent tool selection, and ready-to-run Multi-Agent System.
 
 > *"From concept to code in seconds - InstAgent bridges the gap between imagination and implementation."*
 
