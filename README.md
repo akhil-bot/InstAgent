@@ -1,6 +1,6 @@
 # InstAgent
 
-![InstAgent Logo](assets/InstAgent_logo.png)
+![InstAgent Logo](assets/InstAgent_logo_updated.jpg)
 
 ## 🚀 Instant AI Multi-Agent Systems at Your Fingertips
 
